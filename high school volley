@@ -1,5 +1,8 @@
+import streamlit as st
 import json
 
+# ฐานข้อมูลทีมวอลเลย์บอล
+# เราจะเก็บข้อมูลไว้ในตัวแปร Python Dictionary
 DATABASE = {
     "teams": [
         {
@@ -129,34 +132,34 @@ DATABASE = {
     ]
 }
 
-def get_team_by_name(team_name):
-    """
-    Returns team data by team name.
-    """
-    for team in DATABASE['teams']:
-        if team['name'] == team_name:
-            return team
-    return None
+# ส่วนนี้คือ UI ของ Streamlit
+st.set_page_config(layout="wide")
+st.title("🏐 Volleyball Manager: Team Database")
+st.subheader("ฐานข้อมูลทีมและผู้เล่น")
 
-def get_all_teams():
-    """
-    Returns all team data.
-    """
-    return DATABASE['teams']
+# สร้าง list ของชื่อทีมเพื่อใช้ใน selectbox
+team_names = [team['name'] for team in DATABASE['teams']]
 
-if __name__ == "__main__":
-    # Example usage:
-    print("--- All Teams ---")
-    teams = get_all_teams()
-    for team in teams:
-        print(f"Team: {team['name']} ({team['school']})")
+# ให้ผู้ใช้เลือกทีมจาก dropdown
+selected_team_name = st.selectbox("เลือกทีมที่คุณต้องการดูข้อมูล", team_names)
 
-    print("\n--- Black Crow Team Details ---")
-    black_crow_team = get_team_by_name("Black Crow")
-    if black_crow_team:
-        print(f"Team: {black_crow_team['name']}")
-        print("Players:")
-        for player in black_crow_team['players']:
-            print(f"  - {player['name']} ({player['position']})")
-    else:
-        print("Team not found.")
+# ค้นหาข้อมูลทีมที่ถูกเลือก
+selected_team = next((team for team in DATABASE['teams'] if team['name'] == selected_team_name), None)
+
+if selected_team:
+    st.markdown(f"### ทีม: **{selected_team['name']}** ({selected_team['school']})")
+    
+    st.write("---")
+    st.subheader("รายชื่อผู้เล่น")
+
+    # แบ่งหน้าจอเป็น 3 คอลัมน์เพื่อแสดงผลผู้เล่น
+    cols = st.columns(3)
+    
+    for i, player in enumerate(selected_team['players']):
+        with cols[i % 3]:
+            # ใช้ st.expander เพื่อซ่อน/เปิดดูค่าพลัง
+            with st.expander(f"**{player['name']}** - #{player['jersey_number']} ({player['position']})"):
+                st.write("---")
+                # แสดงค่าพลังของผู้เล่น
+                for attr, value in player['attributes'].items():
+                    st.text(f"- {attr.replace('_', ' ').title()}: {value}")
