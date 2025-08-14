@@ -1,0 +1,162 @@
+import json
+
+DATABASE = {
+    "teams": [
+        {
+            "name": "Black Crow",
+            "school": "Karasuno High",
+            "players": [
+                {
+                    "name": "Shoyo",
+                    "position": "Middle Blocker",
+                    "jersey_number": 10,
+                    "attributes": {
+                        "jumping_power": 95,
+                        "speed": 90,
+                        "spiking": 75,
+                        "blocking": 60,
+                        "reception": 50,
+                        "serving": 65,
+                        "stamina": 85
+                    }
+                },
+                {
+                    "name": "Kageyama",
+                    "position": "Setter",
+                    "jersey_number": 9,
+                    "attributes": {
+                        "jumping_power": 80,
+                        "speed": 85,
+                        "spiking": 80,
+                        "blocking": 70,
+                        "reception": 75,
+                        "serving": 90,
+                        "stamina": 90
+                    }
+                },
+                {
+                    "name": "Nishinoya",
+                    "position": "Libero",
+                    "jersey_number": 4,
+                    "attributes": {
+                        "jumping_power": 65,
+                        "speed": 95,
+                        "spiking": 20,
+                        "blocking": 10,
+                        "reception": 95,
+                        "serving": 70,
+                        "stamina": 90
+                    }
+                },
+                {
+                    "name": "Azumane",
+                    "position": "Outside Hitter",
+                    "jersey_number": 3,
+                    "attributes": {
+                        "jumping_power": 88,
+                        "speed": 70,
+                        "spiking": 95,
+                        "blocking": 80,
+                        "reception": 60,
+                        "serving": 85,
+                        "stamina": 80
+                    }
+                },
+                {
+                    "name": "Tsukishima",
+                    "position": "Middle Blocker",
+                    "jersey_number": 11,
+                    "attributes": {
+                        "jumping_power": 75,
+                        "speed": 65,
+                        "spiking": 70,
+                        "blocking": 90,
+                        "reception": 60,
+                        "serving": 70,
+                        "stamina": 80
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Red Lion",
+            "school": "Shiratorizawa High",
+            "players": [
+                {
+                    "name": "Ushijima",
+                    "position": "Outside Hitter",
+                    "jersey_number": 1,
+                    "attributes": {
+                        "jumping_power": 90,
+                        "speed": 80,
+                        "spiking": 98,
+                        "blocking": 85,
+                        "reception": 75,
+                        "serving": 95,
+                        "stamina": 95
+                    }
+                },
+                {
+                    "name": "Shirabu",
+                    "position": "Setter",
+                    "jersey_number": 10,
+                    "attributes": {
+                        "jumping_power": 70,
+                        "speed": 75,
+                        "spiking": 60,
+                        "blocking": 65,
+                        "reception": 80,
+                        "serving": 70,
+                        "stamina": 85
+                    }
+                },
+                {
+                    "name": "Goshiki",
+                    "position": "Outside Hitter",
+                    "jersey_number": 8,
+                    "attributes": {
+                        "jumping_power": 85,
+                        "speed": 85,
+                        "spiking": 90,
+                        "blocking": 75,
+                        "reception": 65,
+                        "serving": 80,
+                        "stamina": 85
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+def get_team_by_name(team_name):
+    """
+    Returns team data by team name.
+    """
+    for team in DATABASE['teams']:
+        if team['name'] == team_name:
+            return team
+    return None
+
+def get_all_teams():
+    """
+    Returns all team data.
+    """
+    return DATABASE['teams']
+
+if __name__ == "__main__":
+    # Example usage:
+    print("--- All Teams ---")
+    teams = get_all_teams()
+    for team in teams:
+        print(f"Team: {team['name']} ({team['school']})")
+
+    print("\n--- Black Crow Team Details ---")
+    black_crow_team = get_team_by_name("Black Crow")
+    if black_crow_team:
+        print(f"Team: {black_crow_team['name']}")
+        print("Players:")
+        for player in black_crow_team['players']:
+            print(f"  - {player['name']} ({player['position']})")
+    else:
+        print("Team not found.")
